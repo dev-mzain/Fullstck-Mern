@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: SPA HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main-spa.css
+    activate server
+    server-->>browser: the SPA css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main-spa.js
+    activate server
+    server-->>browser: the SPA JavaScript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the SPA JavaScript code
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: { content: "note": date }
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that renders the notes on the SPA without reloading the webpage
