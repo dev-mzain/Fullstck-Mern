@@ -1,0 +1,38 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: SPA HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main-spa.css
+    activate server
+    server-->>browser: the SPA css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main-spa.js
+    activate server
+    server-->>browser: the SPA JavaScript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the SPA JavaScript code
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [note: "date"]
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that renders the notes on the SPA
+
+    Note right of browser: User writes a new note and clicks the submit button
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa {"content": "New note content", "date": "2023-04-13"}
+    activate server
+    Note over server: Server stores the note in the database
+
+    server-->>browser: HTTP status 201 Created, {"note": "New note ", "date": "2023-04-13"}
+    deactivate server
+
+    Note right of browser: The browser updates the SPA with the new note without reloading the page

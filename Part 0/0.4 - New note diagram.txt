@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
+
+    Note right of browser: User writes a new note and clicks the submit button
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note {"content": note: date"}
+    activate server
+    Note over server: Server stores the note in the database
+
+    server-->>browser: HTTP status 201 Created
+    deactivate server
+
+    Note right of browser: Browser reloads the page to show the updated list of notes
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: Updated HTML document with the new note
+    deactivate server
